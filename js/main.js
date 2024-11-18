@@ -1,9 +1,9 @@
-import isMobile from 'ismobilejs';
 
 import '../css/styles.css';
 import '../css/bar-styles.css';
 import '../css/icons/ptroiconfont.css';
 
+import { isMobile } from 'is-mobile';
 import PainterroSelecter from './selecter';
 import WorkLog from './worklog';
 import { genId, addDocumentObjectHelpers, KEYS, trim,
@@ -545,7 +545,7 @@ class PainterroProc {
 
     this.controlBuilder = new ControlBuilder(this);
 
-    this.isMobile = isMobile.any;
+    this.isMobile = isMobile();
     this.toolByName = {};
     this.toolByKeyCode = {};
     this.tools.forEach((t) => {
@@ -933,13 +933,11 @@ class PainterroProc {
         const tmpCtx = tmpCan.getContext('2d');
         tmpCtx.drawImage(this.canvas, -a.topl[0], -a.topl[1]);
         tmpCan.toBlob((b) => {
-          /* eslint no-undef: "off" */
           navigator.clipboard.write([new ClipboardItem({ [clipFormat]: b })]);
         }, clipFormat, 1.0);
         handled = true;
       } else {
         this.canvas.toBlob((b) => {
-          /* eslint no-undef: "off" */
           navigator.clipboard.write([new ClipboardItem({ [clipFormat]: b })]);
         }, clipFormat, 1.0);
         handled = true;
@@ -1012,6 +1010,18 @@ class PainterroProc {
             y: e.touches[1].clientY,
           });
           this.lastFingerDist = fingersDist;
+          
+          const center = {
+            x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+            y: (e.touches[0].clientY + e.touches[1].clientY) / 2,
+          };
+
+          this.curCord = [
+            center.x - this.elLeft() + this.scroller.scrollLeft,
+            center.y - this.elTop() + this.scroller.scrollTop,
+          ];
+          const scale = this.getScale();
+          this.curCord = [this.curCord[0] * scale, this.curCord[1] * scale];
         }
       },
       touchend: (e) => {
@@ -1044,7 +1054,7 @@ class PainterroProc {
           const fingerDistDiff = Math.abs(fingersDist - this.lastFingerDist);
           const zoomForce = (fingersDist > this.lastFingerDist ? 1 : -1);
 
-          this.documentHandlers.wheel(e, zoomForce, true, fingerDistDiff * 0.001);
+          this.documentHandlers.wheel(e, zoomForce, true, fingerDistDiff * 0.002);
           
           this.lastFingerDist = fingersDist;
           e.stopPropagation();

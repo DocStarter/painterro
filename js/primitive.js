@@ -60,7 +60,7 @@ export default class PrimitiveTool {
         };
 
         this.points = [cur];
-        this.drawBrushPath();
+        // this.drawBrushPath();
       } else {
         this.state.cornerMarked = true;
         this.centerCord = [
