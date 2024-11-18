@@ -175,7 +175,6 @@ export function setPrimitiveToolValue(value, primitiveTool, method, param) {
   primitiveTool[method](value);
   const selector = `[data-id="${param}"]`;
   const ctl = document.querySelector(selector);
-  console.log(ctl, value);
 
   if (ctl) {
     if (method === "setShadowOn") {
