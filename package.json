@@ -2,17 +2,16 @@
   "name": "painterro",
   "version": "1.2.87",
   "description": "HTML5 image editing widget (js paint plugin)",
-  "main": "build/painterro.commonjs2.js",
+  "main": "dist/painterro.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/devforth/painterro"
   },
+  "type": "module",
   "scripts": {
-    "prepare": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --progress",
-    "dev": "webpack serve --open --host 0.0.0.0 --port 3000",
-    "watch": "webpack --watch",
+    "module": "webpack --progress --env=module",
+    "start": "webpack && webpack serve --open",
     "buildfont": "node generate_font.js"
   },
   "keywords": [
@@ -32,6 +31,7 @@
     "url": "https://github.com/devforth/painterro/issues",
     "email": "contact@devforth.io"
   },
+  "browserslist": "> 0.2%, not dead",
   "author": "Ivan Borshchov",
   "license": "MIT",
   "devDependencies": {
@@ -41,7 +41,8 @@
     "@vusion/webfonts-generator": "^0.8.0",
     "babel-loader": "^9.2.1",
     "css-loader": "^7.1.2",
-    "eslint": "^9.14.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-import": "^2.31.0",
     "eslint-webpack-plugin": "^4.2.0",
     "mime": ">=4.0.4",
@@ -58,6 +59,7 @@
   "dependencies": {
     "caniuse-lite": "^1.0.30001678",
     "dom-to-image": "^2.6.0",
+    "html-webpack-plugin": "^5.6.3",
     "is-mobile": "^5.0.0"
   }
 }

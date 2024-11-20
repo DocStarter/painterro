@@ -1,6 +1,4 @@
-import { filter } from 'lodash';
 import { tr } from './translation.js';
-import { KEYS } from './utils.js';
 
 export default class Filters {
     constructor(main) {

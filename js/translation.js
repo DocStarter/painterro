@@ -1,15 +1,15 @@
-import de from "../langs/de.lang";
-import en from "../langs/en.lang";
-import es from "../langs/es.lang";
-import ca from "../langs/ca.lang";
-import fr from "../langs/fr.lang";
-import pl from "../langs/pl.lang";
-import ptPTl from "../langs/pt-PT.lang";
-import ptBRl from "../langs/pt-BR.lang";
-import ru from "../langs/ru.lang";
-import ja from "../langs/ja.lang";
-import nl from "../langs/nl.lang";
-import uk from "../langs/uk.lang";
+import de from "../langs/de.lang.js";
+import en from "../langs/en.lang.js";
+import es from "../langs/es.lang.js";
+import ca from "../langs/ca.lang.js";
+import fr from "../langs/fr.lang.js";
+import pl from "../langs/pl.lang.js";
+import ptPTl from "../langs/pt-PT.lang.js";
+import ptBRl from "../langs/pt-BR.lang.js";
+import ru from "../langs/ru.lang.js";
+import ja from "../langs/ja.lang.js";
+import nl from "../langs/nl.lang.js";
+import uk from "../langs/uk.lang.js";
 
 let instance = null;
 

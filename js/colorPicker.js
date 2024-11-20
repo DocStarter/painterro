@@ -1,5 +1,5 @@
-import { tr } from './translation';
-import { KEYS } from './utils';
+import { tr } from './translation.js';
+import { KEYS } from './utils.js';
 
 export function HexToRGB(hex) {
   let parse = /^#?([a-fA-F\d]{2})([a-fA-F\d]{2})([a-fA-F\d]{2})$/i.exec(hex);

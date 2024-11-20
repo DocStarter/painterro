@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { HexToRGBA } from './colorPicker';
-import { trim, logError } from './utils';
-import Translation, { activate } from './translation';
+import { HexToRGBA } from './colorPicker.js';
+import { trim, logError } from './utils.js';
+import Translation, { activate } from './translation.js';
 
 const STORAGE_KEY = 'painterro-data';
 

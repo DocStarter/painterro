@@ -1,98 +1,91 @@
-"use strict";
-const path = require("path");
-const TerserPlugin = require("terser-webpack-plugin");
-const ESLintPlugin = require("eslint-webpack-plugin");
+import path from "path";
+import { fileURLToPath } from "url";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const __isDevServer = process.argv.find((v) => v.includes("serve"));
+const __isModule = process.argv.find((v) => v.includes("--env=module"));
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 
-function webpackConfig(target, mode) {
-  let filename;
-  if (target === "var") {
-    filename = `painterro-${require("./package.json").version}.min.js`;
-  } else if (target === "var-latest") {
-    filename = "painterro.min.js";
-    target = "var";
-  } else {
-    filename = `painterro.${target}.js`;
-  }
+const config = {
+  // Entry point of your module
+  entry: "./js/main.js", // Your entry module
 
-  let options = {
-    mode,
-    entry: ["./js/main.js"],
-    output: {
-      path: path.resolve(__dirname, "build"),
-      filename,
-      libraryTarget: target,
+  // Output configuration
+  output: {
+    path: path.resolve(__dirname, "build"),
+    filename: "painterro.js", // The name of the bundled file
+    library: {
+      name: "painterro",
+      type: "umd",
+      umdNamedDefine: true,
     },
-    plugins: [
-      new ESLintPlugin({
-        extensions: ["js"],
-        exclude: ["/node_modules/"],
-      }),
+    clean: true, // Clean up previous builds
+    // module: true, // Ensure that output is treated as a module
+  },
+
+  // Module rules (Babel loader for transpiling ES6+ code)
+  module: {
+    rules: [
+      {
+        test: /\.js$/, // Process JavaScript files
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader", // Use Babel to transpile modern JS
+          options: {
+            presets: ["@babel/preset-env"], // Preset for modern JavaScript
+            plugins: ["@babel/plugin-syntax-import-assertions"], // Support for import assertions if needed
+          },
+        },
+      },
+      {
+        test: /\.css$/,
+        use: [{ loader: "style-loader" }, { loader: "css-loader" }],
+      },
+      {
+        test: /\.(ttf|woff|woff2|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        type: "asset/resource",
+        generator: {
+          filename: "./assets/[hash][ext]",
+        },
+      },
     ],
-    module: {
-      rules: [
-        {
-          test: /\.css$/,
-          use: [{ loader: "style-loader" }, { loader: "css-loader" }],
-        },
-        {
-          test: /\.(ttf|woff|woff2|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          loader: "url-loader",
-        },
-      ],
-    },
-    stats: {
-      colors: true,
-    },
-    devtool: "source-map",
-    optimization: {
-      minimize: true,
-      minimizer: [new TerserPlugin()],
-    },
+  },
+
+  // Target the browser environment
+  target: "web", // Set target to web for browser compatibility
+
+  // Source maps for easier debugging (optional)
+  devtool: "source-map",
+
+  // Mode (production mode is recommended for final builds)
+  mode: __isDevServer ? "development" : "production",
+};
+
+if (__isDevServer) {
+  config.devServer = {
+    static: path.join(__dirname, "build"), // Serve files from the dist folder
+    compress: true, // Enable gzip compression
+    port: 9000, // The port for the dev-server
+    open: true, // Open the browser automatically
+    hot: true, // Enable Hot Module Replacement (HMR)
+    watchFiles: ["src/**/*"], // Watch files in the `src/` directory
   };
-  if (target === "var") {
-    options.output.library = "Painterro";
-    options.output.libraryExport = "default";
-    options.target = "browserslist";
-    options.module.rules.push({
-      test: /\.(?:js|mjs|cjs)$/,
-      loader: "babel-loader",
-      exclude: /node_modules/,
-      options: {
-        presets: [
-          [
-            "@babel/preset-env",
-            { modules: "commonjs", useBuiltIns: "entry", corejs: "2" },
-          ],
-        ],
-      },
-    });
-  }
 
-  if (mode === "development") {
-    options = {
-      ...options,
-      devServer: {
-        static: path.join(__dirname, "build"),
-        hot: true,
-      },
-      devtool: "inline-source-map",
-    };
-  } else {
-    // options.plugins.push(new BundleAnalyzerPlugin());
-  }
-
-  return options;
+  config.plugins = [
+    new HtmlWebpackPlugin({
+      template: "./html/index.html", // The template for generating index.html
+    }),
+  ];
 }
 
-const isDevServer = process.argv.find((v) => v.includes("serve"));
-
-if (!isDevServer) {
-  console.log("Building production");
-  module.exports = [webpackConfig("var-latest", "production")];
-} else {
-  console.log("Building development");
-  module.exports = [webpackConfig("var-latest", "development")];
+if (__isModule) {
+  console.log("Building module...");
+  config.output.library = {
+    type: "module",
+  };
+  config.output.module = true;
+  config.experiments = { outputModule: true };
 }
+
+export default config;

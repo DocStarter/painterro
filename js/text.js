@@ -1,5 +1,5 @@
-import { KEYS } from './utils';
-import { tr } from './translation';
+import { KEYS } from './utils.js';
+import { tr } from './translation.js';
 import domtoimage from 'dom-to-image';
 
 export default class TextTool {

@@ -1,5 +1,5 @@
-import { tr } from './translation';
-import { genId, KEYS, imgToDataURL } from './utils';
+import { tr } from './translation.js';
+import { genId, KEYS, imgToDataURL } from './utils.js';
 
 export default class Inserter {
   constructor(main) {

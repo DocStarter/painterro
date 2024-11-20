@@ -1,4 +1,4 @@
-import { setParam } from './params';
+import { setParam } from './params.js';
 
 export default class ControlBuilder {
   constructor(main) {

@@ -1,4 +1,4 @@
-import ColorPicker, { HexToRGB, rgbToHex } from './colorPicker';
+import { HexToRGB } from './colorPicker.js';
 
 export default class PaintBucket {
   constructor(main) {

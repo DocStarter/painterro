@@ -1,5 +1,5 @@
-import { tr } from './translation';
-import { KEYS } from './utils';
+import { tr } from './translation.js';
+import { KEYS } from './utils.js';
 
 export default class Resizer {
   constructor(main) {

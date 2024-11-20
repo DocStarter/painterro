@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Painterro demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html,
+      body,
+      #wrapper {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: white;
+      }
+
+      #holder {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="painterro.js"></script>
+    <script>
+      window.p = new painterro.default({
+        language: "en",
+        backgroundFillColorAlpha: 0,
+        defaultArrowLength: 72,
+        hideByEsc: true,
+        saveHandler: this._onPainterroSave,
+        hiddenTools: [
+          "save",
+          "open",
+          "resize",
+          "settings",
+          "clear",
+          "eraser",
+          "bucket",
+          "select",
+          "crop",
+          "pixelize",
+          "close",
+        ],
+      });
+      window.p.show();
+    </script>
+  </body>
+</html>

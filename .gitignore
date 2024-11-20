@@ -62,5 +62,6 @@ typings/
 # custom 
 build/painterro*
 build/report*
+build/*
 
 wp/

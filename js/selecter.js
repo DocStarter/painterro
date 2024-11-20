@@ -1,4 +1,4 @@
-import { clearSelection, KEYS } from './utils';
+import { clearSelection, KEYS } from './utils.js';
 
 export default class PainterroSelecter {
   constructor(main, selectionCallback) {

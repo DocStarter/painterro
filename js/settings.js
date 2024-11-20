@@ -1,6 +1,6 @@
-import { tr } from './translation';
-import { trim, KEYS } from './utils';
-import { setParam } from './params';
+import { tr } from './translation.js';
+import { trim, KEYS } from './utils.js';
+import { setParam } from './params.js';
 
 export default class Settings {
   constructor(main) {
