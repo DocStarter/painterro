@@ -410,7 +410,6 @@ class Painterro {
         name: "zoomout",
         activate: () => {
           if (this.initText) this.wrapper.click();
-          this.zoomButtonActive = true;
           const canvas = this.canvas;
           const gbr = canvas.getBoundingClientRect();
           const e = {
@@ -434,7 +433,6 @@ class Painterro {
         name: "zoomin",
         activate: () => {
           if (this.initText) this.wrapper.click();
-          this.zoomButtonActive = true;
           const canvas = this.canvas;
           const gbr = canvas.getBoundingClientRect();
           const e = {
