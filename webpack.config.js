@@ -46,7 +46,7 @@ const config = {
         test: /\.(ttf|woff|woff2|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         type: "asset/resource",
         generator: {
-          filename: "./assets/[hash][ext]",
+          filename: "ptro-[hash][ext]",
         },
       },
     ],
